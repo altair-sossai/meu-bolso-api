@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeuBolso.Api.Controllers
 {
-    [Route("categoriamovimentacao")]
+    [Route("categorias")]
     [ApiController]
     public class CategoriaMovimentacaoController : ControllerBase
     {
@@ -38,11 +38,6 @@ namespace MeuBolso.Api.Controllers
             var entities = await queryable.ToListAsync(CancellationToken.None);
 
             return entities;
-        }
-
-        public Task<CategoriaMovimentacaoEntity> PostAsync([FromBody] CategoriaMovimentacaoCommand command)
-        {
-            return PostAsync(command, _servicoCategoriaMovimentacao);
         }
 
         [HttpPost]
