@@ -1,4 +1,5 @@
 ﻿using MeuBolso.Modulos.Carteira.Entidades;
+using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +17,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<CarteiraEntity> Carteiras { get; set; } = default!;
+    public DbSet<CategoriaMovimentacaoEntity> Categorias { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -1,0 +1,54 @@
+﻿using AutoMapper;
+using FluentValidation;
+using MeuBolso.Context;
+using MeuBolso.Modulos.Carteira.Commands;
+using MeuBolso.Modulos.CategoriaMovimentacao.Commands;
+using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
+using System.Threading;
+
+namespace MeuBolso.Modulos.CategoriaMovimentacao.Servicos
+{
+    public class ServicoCategoriaMovimentacao : IServicoCategoriaMovimentacao
+    {
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IValidator<CategoriaMovimentacaoEntity> _validator;
+
+        public ServicoCategoriaMovimentacao(AppDbContext context, IMapper mapper, IValidator<CategoriaMovimentacaoEntity> validator)
+        {
+            _context = context;
+            _mapper = mapper;
+            _validator = validator;
+        }
+        public async Task<CategoriaMovimentacaoEntity> AdicionarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken)
+        {
+            var entity = _mapper.Map<CategoriaMovimentacaoEntity>(command);
+
+            await _validator.ValidateAndThrowAsync(entity, cancellationToken);
+            await _context.AddAsync(entity, cancellationToken);
+
+            return entity;
+        }
+
+        public async Task<CategoriaMovimentacaoEntity?> AtualizarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Categorias.FindAsync(command.Id, cancellationToken);
+            if (entity == null)
+                return null;
+
+            _mapper.Map(command, entity);
+            await _validator.ValidateAndThrowAsync(entity, cancellationToken);
+
+            return entity;
+        }
+
+        public async Task ExcluirAsync(Guid Id, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Categorias.FindAsync(Id, cancellationToken);
+            if (entity == null)
+                return;
+
+            _context.Categorias.Remove(entity);
+        }
+    }
+}

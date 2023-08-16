@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "ef66b58b-6ff2-4c78-bcec-6b279312b625"
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
