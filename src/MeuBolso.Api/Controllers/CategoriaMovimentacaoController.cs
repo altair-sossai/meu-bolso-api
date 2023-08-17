@@ -69,7 +69,7 @@ namespace MeuBolso.Api.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok("O delete foi executado com sucesso!");
         }
     }
 }
