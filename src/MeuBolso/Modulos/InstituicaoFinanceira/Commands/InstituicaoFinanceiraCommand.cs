@@ -1,7 +1,8 @@
-﻿namespace MeuBolso.Modulos.InstituicaoFinanceira.Commands;
+﻿using MeuBolso.Infraestrutura.BaseCommand;
 
-public class InstituicaoFinanceiraCommand
+namespace MeuBolso.Modulos.InstituicaoFinanceira.Commands;
+
+public class InstituicaoFinanceiraCommand : CommandWithId
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public string? Nome { get; set; }
 }
