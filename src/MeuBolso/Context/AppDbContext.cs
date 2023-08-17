@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
 
     public DbSet<CarteiraEntity> Carteiras { get; set; } = default!;
     public DbSet<CategoriaMovimentacaoEntity> Categorias { get; set; } = default!;
-    public DbSet<InstituicaoFinanceiraEntity> Instituicoes { get; set; } = default!;
+    public DbSet<InstituicaoFinanceiraEntity> InstituicoesFinanceiras { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

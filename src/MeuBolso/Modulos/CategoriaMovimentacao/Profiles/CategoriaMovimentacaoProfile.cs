@@ -2,13 +2,12 @@
 using MeuBolso.Modulos.CategoriaMovimentacao.Commands;
 using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 
-namespace MeuBolso.Modulos.CategoriaMovimentacao.Profiles
+namespace MeuBolso.Modulos.CategoriaMovimentacao.Profiles;
+
+public class CategoriaMovimentacaoProfile : Profile
 {
-    public class CategoriaMovimentacaoProfile : Profile
+    public CategoriaMovimentacaoProfile()
     {
-        public CategoriaMovimentacaoProfile()
-        {
-            CreateMap<CategoriaMovimentacaoCommand, CategoriaMovimentacaoEntity>();
-        }
+        CreateMap<CategoriaMovimentacaoCommand, CategoriaMovimentacaoEntity>();
     }
 }

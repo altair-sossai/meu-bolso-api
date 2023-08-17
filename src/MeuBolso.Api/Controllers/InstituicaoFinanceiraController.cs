@@ -6,70 +6,70 @@ using MeuBolso.Modulos.InstituicaoFinanceira.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace MeuBolso.Api.Controllers
+namespace MeuBolso.Api.Controllers;
+
+[Route("instituicoes-financeiras")]
+[ApiController]
+public class InstituicaoFinanceiraController : ControllerBase
 {
-    [Route("instituicoes")]
-    [ApiController]
-    public class InstituicaoFinanceiraController : ControllerBase
+    private readonly AppDbContext _context;
+    private readonly IServicoInstituicaoFinanceira _servicoInstituicaoFinanceira;
+
+    public InstituicaoFinanceiraController(AppDbContext context, IServicoInstituicaoFinanceira servicoInstituicaoFinanceira)
     {
-        private readonly AppDbContext _context;
-        private readonly IServicoInstituicaoFinanceira _servicoInstituicaoFinanceira;
-        public InstituicaoFinanceiraController(AppDbContext context, IServicoInstituicaoFinanceira servicoInstituicaoFinanceira)
-        {
-            _context = context;
-            _servicoInstituicaoFinanceira = servicoInstituicaoFinanceira;
-        }
+        _context = context;
+        _servicoInstituicaoFinanceira = servicoInstituicaoFinanceira;
+    }
 
-        [HttpGet("{id}")]
-        public async Task<InstituicaoFinanceiraEntity?> GetAsync([FromRoute] Guid id)
-        {
-            var entity = await _context.Instituicoes.FindAsync(id, CancellationToken.None);
+    [HttpGet("{id}")]
+    public async Task<InstituicaoFinanceiraEntity?> GetAsync([FromRoute] Guid id)
+    {
+        var entity = await _context.InstituicoesFinanceiras.FindAsync(id, CancellationToken.None);
 
-            if (entity == null)
-                return null;
+        if (entity == null)
+            return null;
 
-            return entity;
-        }
+        return entity;
+    }
 
-        [HttpGet]
-        public virtual async Task<List<InstituicaoFinanceiraEntity>> GetAsync([FromQuery] InstituicaoFinanceiraQueryCommand queryCommand)
-        {
-            var queryable = queryCommand.Aplly(_context.Instituicoes.AsNoTracking());
-            var entities = await queryable.ToListAsync(CancellationToken.None);
+    [HttpGet]
+    public virtual async Task<List<InstituicaoFinanceiraEntity>> GetAsync([FromQuery] InstituicaoFinanceiraQueryCommand queryCommand)
+    {
+        var queryable = queryCommand.Aplly(_context.InstituicoesFinanceiras.AsNoTracking());
+        var entities = await queryable.ToListAsync(CancellationToken.None);
 
-            return entities;
-        }
+        return entities;
+    }
 
-        [HttpPost]
-        public async Task<InstituicaoFinanceiraEntity?> PostAsync([FromBody] InstituicaoFinanceiraCommand command)
-        {
-            var entity = await _servicoInstituicaoFinanceira.AdicionarAsync(command, CancellationToken.None);
+    [HttpPost]
+    public async Task<InstituicaoFinanceiraEntity?> PostAsync([FromBody] InstituicaoFinanceiraCommand command)
+    {
+        var entity = await _servicoInstituicaoFinanceira.AdicionarAsync(command, CancellationToken.None);
 
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            return entity;
-        }
+        return entity;
+    }
 
-        [HttpPut]
-        public async Task<InstituicaoFinanceiraEntity?> PutAsync([FromBody] InstituicaoFinanceiraCommand command)
-        {
-            var entity = await _servicoInstituicaoFinanceira.AtualizarAsync(command, CancellationToken.None);
-            if (entity == null)
-                return null;
+    [HttpPut]
+    public async Task<InstituicaoFinanceiraEntity?> PutAsync([FromBody] InstituicaoFinanceiraCommand command)
+    {
+        var entity = await _servicoInstituicaoFinanceira.AtualizarAsync(command, CancellationToken.None);
+        if (entity == null)
+            return null;
 
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            return entity;
-        }
+        return entity;
+    }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
-        {
-            await _servicoInstituicaoFinanceira.ExcluirAsync(id, CancellationToken.None);
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
+    {
+        await _servicoInstituicaoFinanceira.ExcluirAsync(id, CancellationToken.None);
 
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            return Ok();
-        }
+        return Ok();
     }
 }

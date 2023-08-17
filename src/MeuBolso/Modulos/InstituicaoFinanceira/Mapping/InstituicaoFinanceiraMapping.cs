@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MeuBolso.Modulos.InstituicaoFinanceira.Mapping
+namespace MeuBolso.Modulos.InstituicaoFinanceira.Mapping;
+
+public class InstituicaoFinanceiraMapping : IEntityTypeConfiguration<InstituicaoFinanceiraEntity>
 {
-    public class InstituicaoFinanceiraMapping : IEntityTypeConfiguration<InstituicaoFinanceiraEntity>
+    public void Configure(EntityTypeBuilder<InstituicaoFinanceiraEntity> builder)
     {
-        public void Configure(EntityTypeBuilder<InstituicaoFinanceiraEntity> builder)
-        {
-            builder.ToTable("InstituicaoFinanceira");
-            builder.HasKey(c => c.Id);
-            builder.Property(c => c.Nome).HasMaxLength(255);
-        }
+        builder.ToTable("InstituicaoFinanceira");
+
+        builder.HasKey(c => c.Id);
+
+        builder.Property(c => c.Nome)
+            .HasMaxLength(255);
     }
 }
