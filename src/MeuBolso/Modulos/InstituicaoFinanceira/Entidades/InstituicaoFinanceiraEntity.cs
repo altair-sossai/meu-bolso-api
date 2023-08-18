@@ -1,7 +1,8 @@
-﻿namespace MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
+﻿using MeuBolso.Infraestrutura.BaseEntity;
 
-public class InstituicaoFinanceiraEntity
+namespace MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
+
+public class InstituicaoFinanceiraEntity : EntityWithId
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public string? Nome { get; set; }
 }

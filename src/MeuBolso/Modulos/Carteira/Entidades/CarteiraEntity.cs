@@ -1,8 +1,9 @@
-﻿namespace MeuBolso.Modulos.Carteira.Entidades;
+﻿using MeuBolso.Infraestrutura.BaseEntity;
 
-public class CarteiraEntity
+namespace MeuBolso.Modulos.Carteira.Entidades;
+
+public class CarteiraEntity : EntityWithId
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public string? Descricao { get; set; }
     public decimal Saldo { get; set; }
 }
