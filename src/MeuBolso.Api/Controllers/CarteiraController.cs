@@ -1,7 +1,7 @@
 ﻿using MeuBolso.Context;
 using MeuBolso.Modulos.Carteira.Commands;
 using MeuBolso.Modulos.Carteira.Entidades;
-using MeuBolso.Modulos.Carteira.QueryCommand;
+using MeuBolso.Modulos.Carteira.QueryCommands;
 using MeuBolso.Modulos.Carteira.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

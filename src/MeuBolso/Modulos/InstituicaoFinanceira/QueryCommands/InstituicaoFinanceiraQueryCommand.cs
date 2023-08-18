@@ -1,6 +1,6 @@
 ﻿using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 
-namespace MeuBolso.Modulos.InstituicaoFinanceira.QueryCommand;
+namespace MeuBolso.Modulos.InstituicaoFinanceira.QueryCommands;
 
 public class InstituicaoFinanceiraQueryCommand
 {

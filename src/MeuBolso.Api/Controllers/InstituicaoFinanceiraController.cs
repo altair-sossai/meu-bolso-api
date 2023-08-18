@@ -1,7 +1,7 @@
 ﻿using MeuBolso.Context;
 using MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
-using MeuBolso.Modulos.InstituicaoFinanceira.QueryCommand;
+using MeuBolso.Modulos.InstituicaoFinanceira.QueryCommands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

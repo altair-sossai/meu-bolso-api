@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Modulos\CategoriaMovimentacao\QueryCommand\" />
+      <Folder Include="Modulos\CategoriaMovimentacao\QueryCommands\" />
     </ItemGroup>
 
 </Project>

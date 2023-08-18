@@ -1,6 +1,6 @@
 ﻿using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 
-namespace MeuBolso.Modulos.CategoriaMovimentacao.QueryCommand;
+namespace MeuBolso.Modulos.CategoriaMovimentacao.QueryCommands;
 
 public class CategoriaMovimentacaoQueryCommand
 {
