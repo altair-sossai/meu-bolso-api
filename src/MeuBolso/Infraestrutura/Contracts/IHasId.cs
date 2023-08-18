@@ -1,4 +1,4 @@
-﻿namespace MeuBolso.Contratos;
+﻿namespace MeuBolso.Infraestrutura.Contracts;
 
 public interface IHasId<TId>
     where TId : struct

@@ -1,4 +1,4 @@
-﻿using MeuBolso.Contratos;
+﻿using MeuBolso.Infraestrutura.Contracts;
 
 namespace MeuBolso.Infraestrutura.Entitites;
 
