@@ -12,8 +12,6 @@ public class CarteiraQueryCommand : PaginationQueryCommand<CarteiraEntity>
 
     public override IQueryable<CarteiraEntity> Apply(IQueryable<CarteiraEntity> queryable)
     {
-        queryable = base.Apply(queryable);
-
         if (Id.HasValue)
             queryable = queryable.Where(w => w.Id == Id.Value);
 
@@ -26,7 +24,8 @@ public class CarteiraQueryCommand : PaginationQueryCommand<CarteiraEntity>
         if (!string.IsNullOrEmpty(Query))
             queryable = queryable.Where(w => w.Descricao!.Contains(Query));
 
-        return queryable
+        return base
+            .Apply(queryable)
             .OrderBy(o => o.Descricao);
     }
 }
