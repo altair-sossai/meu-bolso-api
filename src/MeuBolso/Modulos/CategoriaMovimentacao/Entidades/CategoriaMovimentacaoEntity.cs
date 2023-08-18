@@ -1,4 +1,4 @@
-﻿using MeuBolso.Infraestrutura.BaseEntity;
+﻿using MeuBolso.Infraestrutura.Entitites;
 using MeuBolso.Modulos.CategoriaMovimentacao.Enum;
 
 namespace MeuBolso.Modulos.CategoriaMovimentacao.Entidades;

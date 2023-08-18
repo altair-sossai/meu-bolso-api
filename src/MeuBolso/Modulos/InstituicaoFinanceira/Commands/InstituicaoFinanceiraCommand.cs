@@ -1,4 +1,4 @@
-﻿using MeuBolso.Infraestrutura.BaseCommand;
+﻿using MeuBolso.Infraestrutura.Commands;
 
 namespace MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 

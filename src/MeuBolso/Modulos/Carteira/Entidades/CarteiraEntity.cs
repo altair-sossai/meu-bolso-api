@@ -1,4 +1,4 @@
-﻿using MeuBolso.Infraestrutura.BaseEntity;
+﻿using MeuBolso.Infraestrutura.Entitites;
 
 namespace MeuBolso.Modulos.Carteira.Entidades;
 
