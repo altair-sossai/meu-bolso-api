@@ -1,4 +1,5 @@
 ﻿using MeuBolso.Context;
+using MeuBolso.Infraestrutura.Pagination;
 using MeuBolso.Modulos.Carteira.Commands;
 using MeuBolso.Modulos.Carteira.Entidades;
 using MeuBolso.Modulos.Carteira.QueryCommands;
@@ -34,12 +35,12 @@ public class CarteiraController : ControllerBase
     }
 
     [HttpGet]
-    public virtual async Task<List<CarteiraEntity>> GetAsync([FromQuery] CarteiraQueryCommand queryCommand)
+    public virtual async Task<PaginationResult<CarteiraEntity>> GetAsync([FromQuery] PaginationCommand<CarteiraEntity, CarteiraQueryCommand> queryCommand)
     {
-        var queryable = queryCommand.Apply(_context.Carteiras.AsNoTracking());
-        var entities = await queryable.ToListAsync(CancellationToken.None);
+        var queryable = _context.Carteiras.AsNoTracking();
+        var paginationResult = await queryCommand.GetPaginationResultAsync(queryable);
 
-        return entities;
+        return paginationResult;
     }
 
     [HttpPost]
