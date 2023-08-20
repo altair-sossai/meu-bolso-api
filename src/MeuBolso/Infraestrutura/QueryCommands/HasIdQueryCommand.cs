@@ -2,7 +2,7 @@
 
 namespace MeuBolso.Infraestrutura.QueryCommands;
 
-public class HasIdQueryCommand<T, TKey> : PaginationQueryCommand<T>
+public class HasIdQueryCommand<T, TKey> : IQueryCommand<T>
     where T : IHasId<TKey>
     where TKey : struct
 {
@@ -10,10 +10,8 @@ public class HasIdQueryCommand<T, TKey> : PaginationQueryCommand<T>
     public HashSet<TKey>? Ids { get; set; }
     public HashSet<TKey>? IgnoreIds { get; set; }
 
-    public override IQueryable<T> Apply(IQueryable<T> queryable)
+    public virtual IQueryable<T> Apply(IQueryable<T> queryable)
     {
-        queryable = base.Apply(queryable);
-
         if (Id.HasValue)
             queryable = queryable.Where(w => w.Id.Equals(Id.Value));
 
