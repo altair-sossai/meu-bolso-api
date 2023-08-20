@@ -1,30 +1,33 @@
 ﻿using MeuBolso.Infraestrutura.Contracts;
-using System.Linq;
 
-namespace MeuBolso.Infraestrutura.QueryCommands
+namespace MeuBolso.Infraestrutura.QueryCommands;
+
+public class HasIdQueryCommand<T, TKey> : PaginationQueryCommand<T>
+    where T : IHasId<TKey>
+    where TKey : struct
 {
-    public class HasIdQueryCommand <T> : PaginationQueryCommand<T>
-        where T:IHasId
+    public TKey? Id { get; set; }
+    public HashSet<TKey>? Ids { get; set; }
+    public HashSet<TKey>? IgnoreIds { get; set; }
+
+    public override IQueryable<T> Apply(IQueryable<T> queryable)
     {
-        public Guid? Id { get; set; }
-        public HashSet<Guid>? Ids { get; set; }
-        public HashSet<Guid>? IgnoreIds { get; set; }
-       
+        queryable = base.Apply(queryable);
 
-        public override IQueryable<T> Apply(IQueryable<T> queryable)
-        {
-            queryable = base.Apply(queryable);
+        if (Id.HasValue)
+            queryable = queryable.Where(w => w.Id.Equals(Id.Value));
 
-            if (Id.HasValue)
-                queryable = queryable.Where(w => w.Id == Id.Value);
+        if (Ids != null && Ids.Any())
+            queryable = queryable.Where(w => Ids.Contains(w.Id));
 
-            if (Ids != null && Ids.Any())
-                queryable = queryable.Where(w => Ids.Contains(w.Id));
+        if (IgnoreIds != null && IgnoreIds.Any())
+            queryable = queryable.Where(w => !IgnoreIds.Contains(w.Id));
 
-            if (IgnoreIds != null && IgnoreIds.Any())
-                queryable = queryable.Where(w => IgnoreIds.Contains(w.Id));
-
-            return queryable;
-        }
+        return queryable;
     }
+}
+
+public class HasIdQueryCommand<T> : HasIdQueryCommand<T, Guid>
+    where T : IHasId<Guid>
+{
 }
