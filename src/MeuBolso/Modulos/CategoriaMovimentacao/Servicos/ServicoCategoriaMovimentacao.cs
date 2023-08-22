@@ -19,6 +19,11 @@ public class ServicoCategoriaMovimentacao : IServicoCategoriaMovimentacao
         _validator = validator;
     }
 
+    public async Task<CategoriaMovimentacaoEntity?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Categorias.FindAsync(id, cancellationToken);
+    }
+
     public async Task<CategoriaMovimentacaoEntity> AdicionarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<CategoriaMovimentacaoEntity>(command);
@@ -31,7 +36,7 @@ public class ServicoCategoriaMovimentacao : IServicoCategoriaMovimentacao
 
     public async Task<CategoriaMovimentacaoEntity?> AtualizarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken)
     {
-        var entity = await _context.Categorias.FindAsync(command.Id, cancellationToken);
+        var entity = await ObterPorIdAsync(command.Id, cancellationToken);
         if (entity == null)
             return null;
 
@@ -43,7 +48,7 @@ public class ServicoCategoriaMovimentacao : IServicoCategoriaMovimentacao
 
     public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _context.Categorias.FindAsync(id, cancellationToken);
+        var entity = await ObterPorIdAsync(id, cancellationToken);
         if (entity == null)
             return;
 

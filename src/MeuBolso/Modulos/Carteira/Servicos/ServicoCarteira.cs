@@ -6,7 +6,6 @@ using MeuBolso.Modulos.Carteira.Entidades;
 
 namespace MeuBolso.Modulos.Carteira.Servicos;
 
-// Classe responsável por fornecer serviços relacionados à entidade Carteira.
 public class ServicoCarteira : IServicoCarteira
 {
     private readonly AppDbContext _context;
@@ -22,37 +21,37 @@ public class ServicoCarteira : IServicoCarteira
         _validator = validator;
     }
 
-    // Adiciona uma nova entidade Carteira ao contexto.
+    public async Task<CarteiraEntity?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Carteiras.FindAsync(id, cancellationToken);
+    }
+
     public async Task<CarteiraEntity> AdicionarAsync(CarteiraCommand command, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<CarteiraEntity>(command);
 
-        // Valida a entidade usando o validador antes de adicionar ao contexto.
         await _validator.ValidateAndThrowAsync(entity, cancellationToken);
         await _context.AddAsync(entity, cancellationToken);
 
         return entity;
     }
 
-    // Atualiza uma entidade Carteira existente no contexto.
     public async Task<CarteiraEntity?> AtualizarAsync(CarteiraCommand command, CancellationToken cancellationToken)
     {
-        var entity = await _context.Carteiras.FindAsync(command.Id, cancellationToken);
+        var entity = await ObterPorIdAsync(command.Id, cancellationToken);
         if (entity == null)
             return null;
 
         _mapper.Map(command, entity);
 
-        // Valida a entidade usando o validador antes de atualizar no contexto.
         await _validator.ValidateAndThrowAsync(entity, cancellationToken);
 
         return entity;
     }
 
-    // Exclui uma entidade Carteira do contexto.
     public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _context.Carteiras.FindAsync(id, cancellationToken);
+        var entity = await ObterPorIdAsync(id, cancellationToken);
         if (entity == null)
             return;
 

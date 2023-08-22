@@ -26,7 +26,7 @@ public class CarteiraController : ControllerBase
     [HttpGet("{id}")]
     public async Task<CarteiraEntity?> GetAsync([FromRoute] Guid id)
     {
-        var entity = await _context.Carteiras.FindAsync(id, CancellationToken.None);
+        var entity = await _servicoCarteira.ObterPorIdAsync(id, CancellationToken.None);
         if (entity == null)
             return null;
 

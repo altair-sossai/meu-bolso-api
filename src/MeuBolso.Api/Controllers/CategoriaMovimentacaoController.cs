@@ -25,7 +25,7 @@ public class CategoriaMovimentacaoController : ControllerBase
     [HttpGet("{id}")]
     public async Task<CategoriaMovimentacaoEntity?> GetAsync([FromRoute] Guid id)
     {
-        var entity = await _context.Categorias.FindAsync(id, CancellationToken.None);
+        var entity = await _servicoCategoriaMovimentacao.ObterPorIdAsync(id, CancellationToken.None);
         if (entity == null)
             return null;
 

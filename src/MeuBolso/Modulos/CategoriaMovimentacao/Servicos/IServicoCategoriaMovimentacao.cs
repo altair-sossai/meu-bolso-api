@@ -5,6 +5,7 @@ namespace MeuBolso.Modulos.CategoriaMovimentacao.Servicos;
 
 public interface IServicoCategoriaMovimentacao
 {
+    Task<CategoriaMovimentacaoEntity?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken);
     Task<CategoriaMovimentacaoEntity> AdicionarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken);
     Task<CategoriaMovimentacaoEntity?> AtualizarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken);
     Task ExcluirAsync(Guid id, CancellationToken cancellationToken);

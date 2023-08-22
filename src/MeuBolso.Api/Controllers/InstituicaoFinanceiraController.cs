@@ -25,7 +25,7 @@ public class InstituicaoFinanceiraController : ControllerBase
     [HttpGet("{id}")]
     public async Task<InstituicaoFinanceiraEntity?> GetAsync([FromRoute] Guid id)
     {
-        var entity = await _context.InstituicoesFinanceiras.FindAsync(id, CancellationToken.None);
+        var entity = await _servicoInstituicaoFinanceira.ObterPorIdAsync(id, CancellationToken.None);
 
         if (entity == null)
             return null;

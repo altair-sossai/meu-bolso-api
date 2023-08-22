@@ -19,6 +19,11 @@ public class ServicoInstituicaoFinanceira : IServicoInstituicaoFinanceira
         _validator = validator;
     }
 
+    public async Task<InstituicaoFinanceiraEntity?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.InstituicoesFinanceiras.FindAsync(id, cancellationToken);
+    }
+
     public async Task<InstituicaoFinanceiraEntity> AdicionarAsync(InstituicaoFinanceiraCommand command, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<InstituicaoFinanceiraEntity>(command);
@@ -31,7 +36,7 @@ public class ServicoInstituicaoFinanceira : IServicoInstituicaoFinanceira
 
     public async Task<InstituicaoFinanceiraEntity?> AtualizarAsync(InstituicaoFinanceiraCommand command, CancellationToken cancellationToken)
     {
-        var entity = await _context.InstituicoesFinanceiras.FindAsync(command.Id, cancellationToken);
+        var entity = await ObterPorIdAsync(command.Id, cancellationToken);
         if (entity == null)
             return null;
 
@@ -43,7 +48,7 @@ public class ServicoInstituicaoFinanceira : IServicoInstituicaoFinanceira
 
     public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _context.InstituicoesFinanceiras.FindAsync(id, cancellationToken);
+        var entity = await ObterPorIdAsync(id, cancellationToken);
         if (entity == null)
             return;
 

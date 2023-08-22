@@ -5,6 +5,7 @@ namespace MeuBolso.Modulos.InstituicaoFinanceira.Servicos;
 
 public interface IServicoInstituicaoFinanceira
 {
+    Task<InstituicaoFinanceiraEntity?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken);
     Task<InstituicaoFinanceiraEntity> AdicionarAsync(InstituicaoFinanceiraCommand command, CancellationToken cancellationToken);
     Task<InstituicaoFinanceiraEntity?> AtualizarAsync(InstituicaoFinanceiraCommand command, CancellationToken cancellationToken);
     Task ExcluirAsync(Guid id, CancellationToken cancellationToken);
