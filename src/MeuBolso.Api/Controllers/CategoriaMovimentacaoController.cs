@@ -1,4 +1,7 @@
 ﻿using MeuBolso.Context;
+using MeuBolso.Infraestrutura.Pagination;
+using MeuBolso.Modulos.Carteira.Entidades;
+using MeuBolso.Modulos.Carteira.QueryCommands;
 using MeuBolso.Modulos.CategoriaMovimentacao.Commands;
 using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 using MeuBolso.Modulos.CategoriaMovimentacao.QueryCommands;
@@ -32,12 +35,12 @@ public class CategoriaMovimentacaoController : ControllerBase
     }
 
     [HttpGet]
-    public virtual async Task<List<CategoriaMovimentacaoEntity>> GetAsync([FromQuery] CategoriaMovimentacaoQueryCommand queryCommand)
+    public virtual async Task<PaginationResult<CategoriaMovimentacaoEntity>> GetAsync([FromQuery] PaginationCommand<CategoriaMovimentacaoEntity, CategoriaMovimentacaoQueryCommand> queryCommand)
     {
-        var queryable = queryCommand.Apply(_context.Categorias.AsNoTracking());
-        var entities = await queryable.ToListAsync(CancellationToken.None);
+        var queryable = _context.Categorias.AsNoTracking();
+        var paginationResult = await queryCommand.GetPaginationResultAsync(queryable);
 
-        return entities;
+        return paginationResult;
     }
 
     [HttpPost]

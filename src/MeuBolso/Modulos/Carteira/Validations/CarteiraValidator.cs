@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MeuBolso.Infraestrutura.Validators;
+using MeuBolso.Infraestrutura.Validations;
 using MeuBolso.Modulos.Carteira.Entidades;
 
 namespace MeuBolso.Modulos.Carteira.Validations;

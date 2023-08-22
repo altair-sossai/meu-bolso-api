@@ -1,4 +1,7 @@
 ﻿using MeuBolso.Context;
+using MeuBolso.Infraestrutura.Pagination;
+using MeuBolso.Modulos.Carteira.Entidades;
+using MeuBolso.Modulos.Carteira.QueryCommands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 using MeuBolso.Modulos.InstituicaoFinanceira.QueryCommands;
@@ -33,12 +36,12 @@ public class InstituicaoFinanceiraController : ControllerBase
     }
 
     [HttpGet]
-    public virtual async Task<List<InstituicaoFinanceiraEntity>> GetAsync([FromQuery] InstituicaoFinanceiraQueryCommand queryCommand)
+    public virtual async Task<PaginationResult<InstituicaoFinanceiraEntity>> GetAsync([FromQuery] PaginationCommand<InstituicaoFinanceiraEntity, InstituicaoFinanceiraQueryCommand> queryCommand)
     {
-        var queryable = queryCommand.Aplly(_context.InstituicoesFinanceiras.AsNoTracking());
-        var entities = await queryable.ToListAsync(CancellationToken.None);
+        var queryable = _context.InstituicoesFinanceiras.AsNoTracking();
+        var paginationResult = await queryCommand.GetPaginationResultAsync(queryable);
 
-        return entities;
+        return paginationResult;
     }
 
     [HttpPost]

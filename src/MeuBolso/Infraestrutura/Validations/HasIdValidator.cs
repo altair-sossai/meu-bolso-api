@@ -2,7 +2,7 @@
 using MeuBolso.Infraestrutura.Contracts;
 using System.Data;
 
-namespace MeuBolso.Infraestrutura.Validators;
+namespace MeuBolso.Infraestrutura.Validations;
 public abstract class HasIdValidator<T, TKey> : AbstractValidator<T>
     where T : IHasId<TKey>
     where TKey : struct
