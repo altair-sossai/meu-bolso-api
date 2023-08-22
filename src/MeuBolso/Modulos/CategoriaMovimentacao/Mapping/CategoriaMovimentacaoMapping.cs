@@ -1,21 +1,23 @@
-﻿using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
+﻿using MeuBolso.Infraestrutura.Extensions;
+using MeuBolso.Infraestrutura.Mappings;
+using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MeuBolso.Modulos.CategoriaMovimentacao.Mapping;
 
-public class CategoriaMovimentacaoMapping : IEntityTypeConfiguration<CategoriaMovimentacaoEntity>
+public class CategoriaMovimentacaoMapping : HasIdMapping<CategoriaMovimentacaoEntity>
 {
-    public void Configure(EntityTypeBuilder<CategoriaMovimentacaoEntity> builder)
+    public override void Configure(EntityTypeBuilder<CategoriaMovimentacaoEntity> builder)
     {
-        builder.ToTable("CategoriaMovimentacao");
+        base.Configure(builder);
 
-        builder.HasKey(x => x.Id);
+        builder.ToTable("CategoriaMovimentacao");
 
         builder.Property(x => x.Nome)
             .HasMaxLength(255);
 
         builder.Property(x => x.PrevisaoGastoMes)
-            .HasColumnType("decimal(18,2)");
+            .UseDecimalType();
     }
 }

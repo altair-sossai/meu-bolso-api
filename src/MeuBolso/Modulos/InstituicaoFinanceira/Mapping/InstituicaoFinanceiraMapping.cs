@@ -1,16 +1,17 @@
-﻿using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
+﻿using MeuBolso.Infraestrutura.Mappings;
+using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MeuBolso.Modulos.InstituicaoFinanceira.Mapping;
 
-public class InstituicaoFinanceiraMapping : IEntityTypeConfiguration<InstituicaoFinanceiraEntity>
+public class InstituicaoFinanceiraMapping : HasIdMapping<InstituicaoFinanceiraEntity>
 {
-    public void Configure(EntityTypeBuilder<InstituicaoFinanceiraEntity> builder)
+    public override void Configure(EntityTypeBuilder<InstituicaoFinanceiraEntity> builder)
     {
-        builder.ToTable("InstituicaoFinanceira");
+        base.Configure(builder);
 
-        builder.HasKey(c => c.Id);
+        builder.ToTable("InstituicaoFinanceira");
 
         builder.Property(c => c.Nome)
             .HasMaxLength(255);
