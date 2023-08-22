@@ -1,7 +1,5 @@
 ﻿using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Pagination;
-using MeuBolso.Modulos.Carteira.Entidades;
-using MeuBolso.Modulos.Carteira.QueryCommands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 using MeuBolso.Modulos.InstituicaoFinanceira.QueryCommands;

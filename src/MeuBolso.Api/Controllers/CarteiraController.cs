@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeuBolso.Api.Controllers;
 
-// Controlador responsável por lidar com as requisições relacionadas à entidade Carteira.
 [Route("carteiras")]
 [ApiController]
 public class CarteiraController : ControllerBase
