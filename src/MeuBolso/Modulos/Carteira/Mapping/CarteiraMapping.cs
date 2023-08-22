@@ -1,19 +1,19 @@
-﻿using MeuBolso.Modulos.Carteira.Entidades;
+﻿using MeuBolso.Infraestrutura.Mappings;
+using MeuBolso.Modulos.Carteira.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MeuBolso.Modulos.Carteira.Mapping;
 
 // Classe responsável por mapear a entidade CarteiraEntity para o banco de dados.
-public class CarteiraMapping : IEntityTypeConfiguration<CarteiraEntity>
+public class CarteiraMapping : HasIdMapping<CarteiraEntity>
 {
-    public void Configure(EntityTypeBuilder<CarteiraEntity> builder)
+    public override void Configure(EntityTypeBuilder<CarteiraEntity> builder)
     {
         // Define o nome da tabela no banco de dados como "Carteiras".
         builder.ToTable("Carteiras");
 
-        // Define a chave primária da tabela como o campo Id da entidade CarteiraEntity.
-        builder.HasKey(c => c.Id);
+        base.Configure(builder);
 
         // Configuração do mapeamento para o campo "Descricao".
         builder.Property(c => c.Descricao)
