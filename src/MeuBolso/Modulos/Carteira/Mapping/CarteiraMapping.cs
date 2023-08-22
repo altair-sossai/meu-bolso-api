@@ -1,4 +1,5 @@
-﻿using MeuBolso.Infraestrutura.Mappings;
+﻿using MeuBolso.Infraestrutura.Extensions;
+using MeuBolso.Infraestrutura.Mappings;
 using MeuBolso.Modulos.Carteira.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -17,6 +18,6 @@ public class CarteiraMapping : HasIdMapping<CarteiraEntity>
             .HasMaxLength(255);
 
         builder.Property(c => c.Saldo)
-            .HasColumnType("decimal(18,2)");
+            .UseDecimalType();
     }
 }

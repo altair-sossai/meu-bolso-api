@@ -1,4 +1,5 @@
-﻿using MeuBolso.Infraestrutura.Mappings;
+﻿using MeuBolso.Infraestrutura.Extensions;
+using MeuBolso.Infraestrutura.Mappings;
 using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -17,6 +18,6 @@ public class CategoriaMovimentacaoMapping : HasIdMapping<CategoriaMovimentacaoEn
             .HasMaxLength(255);
 
         builder.Property(x => x.PrevisaoGastoMes)
-            .HasColumnType("decimal(18,2)");
+            .UseDecimalType();
     }
 }
