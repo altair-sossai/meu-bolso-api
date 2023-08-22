@@ -32,6 +32,11 @@ public class ServicoInstituicaoFinanceira : IServicoInstituicaoFinanceira
     public async Task<InstituicaoFinanceiraEntity?> AtualizarAsync(InstituicaoFinanceiraCommand command, CancellationToken cancellationToken)
     {
         var entity = await _context.InstituicoesFinanceiras.FindAsync(command.Id, cancellationToken);
+        if (entity == null)
+            return null;
+
+        _mapper.Map(command, entity);
+        await _validator.ValidateAndThrowAsync(entity, cancellationToken);
 
         return entity;
     }
