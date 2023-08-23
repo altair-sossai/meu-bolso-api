@@ -1,9 +1,9 @@
 ﻿using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Pagination;
+using MeuBolso.Infraestrutura.Services;
 using MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 using MeuBolso.Modulos.InstituicaoFinanceira.QueryCommands;
-using MeuBolso.Modulos.InstituicaoFinanceira.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +14,10 @@ namespace MeuBolso.Api.Controllers;
 public class InstituicaoFinanceiraController : ControllerBase
 {
     private readonly AppDbContext _context;
-    private readonly IServicoInstituicaoFinanceira _servicoInstituicaoFinanceira;
+    private readonly IBaseService<InstituicaoFinanceiraEntity, InstituicaoFinanceiraCommand, InstituicaoFinanceiraCommand, Guid> _servicoInstituicaoFinanceira;
 
-    public InstituicaoFinanceiraController(AppDbContext context, IServicoInstituicaoFinanceira servicoInstituicaoFinanceira)
+    public InstituicaoFinanceiraController
+        (AppDbContext context, IBaseService<InstituicaoFinanceiraEntity, InstituicaoFinanceiraCommand, InstituicaoFinanceiraCommand, Guid> servicoInstituicaoFinanceira)
     {
         _context = context;
         _servicoInstituicaoFinanceira = servicoInstituicaoFinanceira;
@@ -55,7 +56,7 @@ public class InstituicaoFinanceiraController : ControllerBase
     [HttpPut]
     public async Task<InstituicaoFinanceiraEntity?> PutAsync([FromBody] InstituicaoFinanceiraCommand command)
     {
-        var entity = await _servicoInstituicaoFinanceira.AtualizarAsync(command, CancellationToken.None);
+        var entity = await _servicoInstituicaoFinanceira.UpdateAsync(command, CancellationToken.None);
         if (entity == null)
             return null;
 
@@ -67,7 +68,7 @@ public class InstituicaoFinanceiraController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
     {
-        await _servicoInstituicaoFinanceira.ExcluirAsync(id, CancellationToken.None);
+        await _servicoInstituicaoFinanceira.DeleteAsync(id, CancellationToken.None);
 
         await _context.SaveChangesAsync();
 

@@ -1,9 +1,9 @@
 ﻿using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Pagination;
+using MeuBolso.Infraestrutura.Services;
 using MeuBolso.Modulos.CategoriaMovimentacao.Commands;
 using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
 using MeuBolso.Modulos.CategoriaMovimentacao.QueryCommands;
-using MeuBolso.Modulos.CategoriaMovimentacao.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +14,10 @@ namespace MeuBolso.Api.Controllers;
 public class CategoriaMovimentacaoController : ControllerBase
 {
     private readonly AppDbContext _context;
-    private readonly IServicoCategoriaMovimentacao _servicoCategoriaMovimentacao;
+    private readonly IBaseService<CategoriaMovimentacaoEntity, CategoriaMovimentacaoCommand, CategoriaMovimentacaoCommand, Guid> _servicoCategoriaMovimentacao;
 
-    public CategoriaMovimentacaoController(AppDbContext context, IServicoCategoriaMovimentacao servicoCategoriaMovimentacao)
+    public CategoriaMovimentacaoController(AppDbContext context, IBaseService<CategoriaMovimentacaoEntity, CategoriaMovimentacaoCommand, CategoriaMovimentacaoCommand, Guid> 
+        servicoCategoriaMovimentacao)
     {
         _context = context;
         _servicoCategoriaMovimentacao = servicoCategoriaMovimentacao;
@@ -42,7 +43,7 @@ public class CategoriaMovimentacaoController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<CategoriaMovimentacaoEntity> PostAsync([FromBody] CategoriaMovimentacaoCommand command)
+    public async Task<CategoriaMovimentacaoEntity?> PostAsync([FromBody] CategoriaMovimentacaoCommand command)
     {
         var entity = await _servicoCategoriaMovimentacao.AdicionarAsync(command, CancellationToken.None);
 
@@ -54,7 +55,7 @@ public class CategoriaMovimentacaoController : ControllerBase
     [HttpPut]
     public async Task<CategoriaMovimentacaoEntity?> PutAsync([FromBody] CategoriaMovimentacaoCommand command)
     {
-        var entity = await _servicoCategoriaMovimentacao.AtualizarAsync(command, CancellationToken.None);
+        var entity = await _servicoCategoriaMovimentacao.UpdateAsync(command, CancellationToken.None);
         if (entity == null)
             return null;
 
@@ -66,7 +67,7 @@ public class CategoriaMovimentacaoController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
     {
-        await _servicoCategoriaMovimentacao.ExcluirAsync(id, CancellationToken.None);
+        await _servicoCategoriaMovimentacao.DeleteAsync(id, CancellationToken.None);
 
         await _context.SaveChangesAsync();
 
