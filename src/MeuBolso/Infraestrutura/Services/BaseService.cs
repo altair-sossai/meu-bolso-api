@@ -1,34 +1,34 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace MeuBolso.Infraestrutura.Services;
 
-public class BaseService<TEntity, TCommand, TUpdateCommand, TKey> : IBaseService<TEntity, TCommand, TUpdateCommand, TKey>
+public abstract class BaseService<TEntity, TAddCommand, TUpdateCommand, TKey> : IBaseService<TEntity, TAddCommand, TUpdateCommand, TKey>
     where TEntity : class, IHasId<TKey>
-    where TCommand : IHasId<TKey>
     where TUpdateCommand : IHasId<TKey>
     where TKey : struct
 {
-    private readonly AppDbContext _context;
+    private readonly DbContext _context;
     private readonly IMapper _mapper;
     private readonly IValidator<TEntity> _validator;
-    protected DbSet<TEntity> DbSet => _context.Set<TEntity>();
 
-    public BaseService(AppDbContext context, IMapper mapper, IValidator<TEntity> validator)
+    protected BaseService(DbContext context, IMapper mapper, IValidator<TEntity> validator)
     {
         _context = context;
         _mapper = mapper;
         _validator = validator;
     }
 
-    public async Task<TEntity?> ObterPorIdAsync(TKey id, CancellationToken cancellationToken)
+    private DbSet<TEntity> DbSet => _context.Set<TEntity>();
+
+    public virtual async Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken)
     {
         return await DbSet.FindAsync(id, cancellationToken);
     }
-    public async Task<TEntity?> AdicionarAsync(TCommand command, CancellationToken cancellationToken)
+
+    public virtual async Task<TEntity> AddAsync(TAddCommand command, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<TEntity>(command);
 
@@ -38,22 +38,46 @@ public class BaseService<TEntity, TCommand, TUpdateCommand, TKey> : IBaseService
         return entity;
     }
 
-    public async Task<TEntity?> UpdateAsync(TUpdateCommand updateCommand, CancellationToken cancellationToken)
+    public virtual async Task<TEntity?> UpdateAsync(TUpdateCommand updateCommand, CancellationToken cancellationToken)
     {
-        var entity = await ObterPorIdAsync(updateCommand.Id, cancellationToken);
+        var entity = await FindAsync(updateCommand.Id, cancellationToken);
         if (entity == null)
             return null;
 
         _mapper.Map(updateCommand, entity);
 
+        await _validator.ValidateAndThrowAsync(entity, cancellationToken);
+
         return entity;
     }
-    public async Task DeleteAsync(TKey id, CancellationToken cancellationToken)
+
+    public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken)
     {
-        var entity = await ObterPorIdAsync(id, cancellationToken);
-        if (entity == null) 
+        var entity = await FindAsync(id, cancellationToken);
+        if (entity == null)
             return;
 
         DbSet.Remove(entity);
+    }
+}
+
+public abstract class BaseService<TEntity, TCommand, TKey> : BaseService<TEntity, TCommand, TCommand, TKey>, IBaseService<TEntity, TCommand, TKey>
+    where TEntity : class, IHasId<TKey>
+    where TCommand : IHasId<TKey>
+    where TKey : struct
+{
+    protected BaseService(DbContext context, IMapper mapper, IValidator<TEntity> validator)
+        : base(context, mapper, validator)
+    {
+    }
+}
+
+public abstract class BaseService<TEntity, TCommand> : BaseService<TEntity, TCommand, Guid>, IBaseService<TEntity, TCommand>
+    where TEntity : class, IHasId<Guid>
+    where TCommand : IHasId<Guid>
+{
+    protected BaseService(DbContext context, IMapper mapper, IValidator<TEntity> validator)
+        : base(context, mapper, validator)
+    {
     }
 }

@@ -26,7 +26,7 @@ public class InstituicaoFinanceiraController : ControllerBase
     [HttpGet("{id}")]
     public async Task<InstituicaoFinanceiraEntity?> GetAsync([FromRoute] Guid id)
     {
-        var entity = await _servicoInstituicaoFinanceira.ObterPorIdAsync(id, CancellationToken.None);
+        var entity = await _servicoInstituicaoFinanceira.FindAsync(id, CancellationToken.None);
 
         if (entity == null)
             return null;
@@ -46,7 +46,7 @@ public class InstituicaoFinanceiraController : ControllerBase
     [HttpPost]
     public async Task<InstituicaoFinanceiraEntity?> PostAsync([FromBody] InstituicaoFinanceiraCommand command)
     {
-        var entity = await _servicoInstituicaoFinanceira.AdicionarAsync(command, CancellationToken.None);
+        var entity = await _servicoInstituicaoFinanceira.AddAsync(command, CancellationToken.None);
 
         await _context.SaveChangesAsync();
 
