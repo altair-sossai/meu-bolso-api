@@ -42,7 +42,7 @@ public class CarteiraController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<CarteiraEntity?> PostAsync([FromBody] CarteiraCommand command)
+    public async Task<CarteiraEntity> PostAsync([FromBody] CarteiraCommand command)
     {
         var entity = await _servicoCarteira.AdicionarAsync(command, CancellationToken.None);
 

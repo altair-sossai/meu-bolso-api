@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Services;
 using MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
 
 namespace MeuBolso.Modulos.InstituicaoFinanceira.Servicos;
 
@@ -30,8 +28,8 @@ public class ServicoInstituicaoFinanceira : BaseService<InstituicaoFinanceiraEnt
         return await UpdateAsync(command, cancellationToken);
     }
 
-    public async Task ExcluirAsync(Guid Id, CancellationToken cancellationToken)
+    public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        await DeleteAsync(Id, cancellationToken);
+        await DeleteAsync(id, cancellationToken);
     }
 }

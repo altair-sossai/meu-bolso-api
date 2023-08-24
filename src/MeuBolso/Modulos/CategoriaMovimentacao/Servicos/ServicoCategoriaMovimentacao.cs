@@ -28,8 +28,8 @@ public class ServicoCategoriaMovimentacao : BaseService<CategoriaMovimentacaoEnt
         return await UpdateAsync(command, cancellationToken);
     }
 
-    public async Task ExcluirAsync(Guid Id, CancellationToken cancellationToken)
+    public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        await DeleteAsync(Id, cancellationToken);
+        await DeleteAsync(id, cancellationToken);
     }
 }
