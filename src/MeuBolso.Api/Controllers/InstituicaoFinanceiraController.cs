@@ -43,7 +43,7 @@ public class InstituicaoFinanceiraController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<InstituicaoFinanceiraEntity?> PostAsync([FromBody] InstituicaoFinanceiraCommand command)
+    public async Task<InstituicaoFinanceiraEntity> PostAsync([FromBody] InstituicaoFinanceiraCommand command)
     {
         var entity = await _servicoInstituicaoFinanceira.AdicionarAsync(command, CancellationToken.None);
 

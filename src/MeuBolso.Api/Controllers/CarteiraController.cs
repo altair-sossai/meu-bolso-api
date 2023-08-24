@@ -16,8 +16,7 @@ public class CarteiraController : ControllerBase
     private readonly AppDbContext _context;
     private readonly IServicoCarteira _servicoCarteira;
 
-    public CarteiraController(AppDbContext context,
-        IServicoCarteira servicoCarteira)
+    public CarteiraController(AppDbContext context, IServicoCarteira servicoCarteira)
     {
         _context = context;
         _servicoCarteira = servicoCarteira;
