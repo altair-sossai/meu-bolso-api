@@ -1,15 +1,35 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Services;
 using MeuBolso.Modulos.CategoriaMovimentacao.Commands;
 using MeuBolso.Modulos.CategoriaMovimentacao.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeuBolso.Modulos.CategoriaMovimentacao.Servicos;
 
-public class ServicoCategoriaMovimentacao : BaseService<CategoriaMovimentacaoEntity, CategoriaMovimentacaoCommand, CategoriaMovimentacaoCommand, Guid>
+public class ServicoCategoriaMovimentacao : BaseService<CategoriaMovimentacaoEntity, CategoriaMovimentacaoCommand, CategoriaMovimentacaoCommand, Guid>, IServicoCategoriaMovimentacao
 {
-    public ServicoCategoriaMovimentacao(AppDbContext context, IMapper mapper, IValidator<CategoriaMovimentacaoEntity> validator) : base(context, mapper, validator)
+    public ServicoCategoriaMovimentacao(DbContext context, IMapper mapper, IValidator<CategoriaMovimentacaoEntity> validator) : base(context, mapper, validator)
     {
+    }
+
+    public async Task<CategoriaMovimentacaoEntity?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await FindAsync(id, cancellationToken);
+    }
+
+    public async Task<CategoriaMovimentacaoEntity> AdicionarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken)
+    {
+        return await AddAsync(command, cancellationToken);
+    }
+
+    public async Task<CategoriaMovimentacaoEntity?> AtualizarAsync(CategoriaMovimentacaoCommand command, CancellationToken cancellationToken)
+    {
+        return await UpdateAsync(command, cancellationToken);
+    }
+
+    public async Task ExcluirAsync(Guid Id, CancellationToken cancellationToken)
+    {
+        await DeleteAsync(Id, cancellationToken);
     }
 }
