@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MeuBolso.Context;
 using MeuBolso.Infraestrutura.Services;
 using MeuBolso.Modulos.InstituicaoFinanceira.Commands;
 using MeuBolso.Modulos.InstituicaoFinanceira.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
 
 namespace MeuBolso.Modulos.InstituicaoFinanceira.Servicos;
 
-public class ServicoInstituicaoFinanceira : BaseService<InstituicaoFinanceiraEntity, InstituicaoFinanceiraCommand, InstituicaoFinanceiraCommand, Guid>, IServicoInstituicaoFinanceira
+public class ServicoInstituicaoFinanceira : BaseService<InstituicaoFinanceiraEntity, InstituicaoFinanceiraCommand>, IServicoInstituicaoFinanceira
 {
-    public ServicoInstituicaoFinanceira(DbContext context, IMapper mapper, IValidator<InstituicaoFinanceiraEntity> validator) : base(context, mapper, validator)
+    public ServicoInstituicaoFinanceira(DbContext context, IMapper mapper, IValidator<InstituicaoFinanceiraEntity> validator)
+        : base(context, mapper, validator)
     {
     }
 
@@ -30,8 +29,8 @@ public class ServicoInstituicaoFinanceira : BaseService<InstituicaoFinanceiraEnt
         return await UpdateAsync(command, cancellationToken);
     }
 
-    public async Task ExcluirAsync(Guid Id, CancellationToken cancellationToken)
+    public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        await DeleteAsync(Id, cancellationToken);
+        await DeleteAsync(id, cancellationToken);
     }
 }

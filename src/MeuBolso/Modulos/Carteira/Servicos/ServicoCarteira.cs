@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeuBolso.Modulos.Carteira.Servicos;
 
-public class ServicoCarteira : BaseService<CarteiraEntity, CarteiraCommand, CarteiraCommand, Guid>, IServicoCarteira
+public class ServicoCarteira : BaseService<CarteiraEntity, CarteiraCommand>, IServicoCarteira
 {
     public ServicoCarteira(DbContext context, IMapper mapper, IValidator<CarteiraEntity> validator)
         : base(context, mapper, validator)

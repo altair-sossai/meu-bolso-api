@@ -7,9 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeuBolso.Modulos.CategoriaMovimentacao.Servicos;
 
-public class ServicoCategoriaMovimentacao : BaseService<CategoriaMovimentacaoEntity, CategoriaMovimentacaoCommand, CategoriaMovimentacaoCommand, Guid>, IServicoCategoriaMovimentacao
+public class ServicoCategoriaMovimentacao : BaseService<CategoriaMovimentacaoEntity, CategoriaMovimentacaoCommand>, IServicoCategoriaMovimentacao
 {
-    public ServicoCategoriaMovimentacao(DbContext context, IMapper mapper, IValidator<CategoriaMovimentacaoEntity> validator) : base(context, mapper, validator)
+    public ServicoCategoriaMovimentacao(DbContext context, IMapper mapper, IValidator<CategoriaMovimentacaoEntity> validator)
+        : base(context, mapper, validator)
     {
     }
 
@@ -28,8 +29,8 @@ public class ServicoCategoriaMovimentacao : BaseService<CategoriaMovimentacaoEnt
         return await UpdateAsync(command, cancellationToken);
     }
 
-    public async Task ExcluirAsync(Guid Id, CancellationToken cancellationToken)
+    public async Task ExcluirAsync(Guid id, CancellationToken cancellationToken)
     {
-        await DeleteAsync(Id, cancellationToken);
+        await DeleteAsync(id, cancellationToken);
     }
 }
