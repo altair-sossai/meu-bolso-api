@@ -3,7 +3,7 @@
 namespace MeuBolso.Infraestrutura.Pagination;
 
 public class PaginationCommand<T, TQueryCommand>
-    where TQueryCommand : IQueryCommand<T>
+    where TQueryCommand : IQueryCommand<T>, new()
 {
     private const int DefaultPage = 1;
     private const int DefaultPageSize = 5_000;
@@ -12,7 +12,7 @@ public class PaginationCommand<T, TQueryCommand>
     private int _page = DefaultPage;
     private int _pageSize = DefaultPageSize;
 
-    public TQueryCommand? Filters { get; set; }
+    public TQueryCommand? Filters { get; set; } = new();
 
     public int Page
     {
